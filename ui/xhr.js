@@ -27,13 +27,9 @@ export function get(url, headers) {
       res(authReq);
     });
 
-    authReq.addEventListener("error", (e) => {
-      rej(e);
-    });
+    authReq.addEventListener("error", (e) => { rej(e); });
 
-    authReq.addEventListener("timeout", (e) => {
-      rej(e);
-    });
+    authReq.addEventListener("timeout", (e) => { rej(e); });
 
     authReq.open("GET", url, true);
 

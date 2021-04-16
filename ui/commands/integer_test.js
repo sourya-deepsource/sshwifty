@@ -24,9 +24,8 @@ describe("Integer", () => {
     const i = new integer.Integer(127);
     const marshalled = i.marshal();
 
-    const r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
-      return data;
-    });
+    const r = new reader.Reader(new reader.Multiple(() => {}),
+                                (data) => { return data; });
 
     assert.equal(marshalled.length, 1);
 
@@ -43,9 +42,8 @@ describe("Integer", () => {
     const i = new integer.Integer(integer.MAX);
     const marshalled = i.marshal();
 
-    const r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
-      return data;
-    });
+    const r = new reader.Reader(new reader.Multiple(() => {}),
+                                (data) => { return data; });
 
     assert.equal(marshalled.length, 2);
 

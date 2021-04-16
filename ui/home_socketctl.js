@@ -1,36 +1,36 @@
 import * as history from "./history.js";
-import { ECHO_FAILED } from "./socket.js";
+import {ECHO_FAILED} from "./socket.js";
 
 export function build(ctx) {
   const connectionStatusNotConnected = "Sshwifty is ready to connect";
   const connectionStatusConnecting =
-    "Connecting to Sshwifty backend server. It should only take " +
-    "less than a second, or two";
+      "Connecting to Sshwifty backend server. It should only take " +
+      "less than a second, or two";
   const connectionStatusDisconnected =
-    "Sshwifty is disconnected from it's backend server";
+      "Sshwifty is disconnected from it's backend server";
   const connectionStatusConnected =
-    "Sshwifty is connected to it's backend server, user interface operational";
+      "Sshwifty is connected to it's backend server, user interface operational";
   const connectionStatusUnmeasurable =
-    "Unable to measure connection delay. The connection maybe very " +
-    "busy or already lost";
+      "Unable to measure connection delay. The connection maybe very " +
+      "busy or already lost";
 
   const connectionDelayGood =
-    "Connection delay is low, operation should be very responsive";
+      "Connection delay is low, operation should be very responsive";
   const connectionDelayFair =
-    "Experiencing minor connection delay, operation should be responded " +
-    "within a reasonable time";
+      "Experiencing minor connection delay, operation should be responded " +
+      "within a reasonable time";
   const connectionDelayMedian =
-    "Experiencing median connection delay, consider to slow down your input " +
-    "to avoid misoperation";
+      "Experiencing median connection delay, consider to slow down your input " +
+      "to avoid misoperation";
   const connectionDelayHeavy =
-    "Experiencing bad connection delay, operation may freeze at any moment. " +
-    "Consider to pause your input until remote is responsive";
+      "Experiencing bad connection delay, operation may freeze at any moment. " +
+      "Consider to pause your input until remote is responsive";
 
   const buildEmptyHistory = () => {
     const r = [];
 
     for (let i = 0; i < 32; i++) {
-      r.push({ data: 0, class: "" });
+      r.push({data : 0, class : ""});
     }
 
     return r;
@@ -91,17 +91,17 @@ export function build(ctx) {
         }
       }
     },
-    classStyle: "",
-    windowClass: "",
-    message: "",
-    status: {
-      description: connectionStatusNotConnected,
-      delay: 0,
-      delayHistory: delayHistory.get(),
-      inbound: 0,
-      inboundHistory: inboundHistory.get(),
-      outbound: 0,
-      outboundHistory: outboundHistory.get(),
+    classStyle : "",
+    windowClass : "",
+    message : "",
+    status : {
+      description : connectionStatusNotConnected,
+      delay : 0,
+      delayHistory : delayHistory.get(),
+      inbound : 0,
+      inboundHistory : inboundHistory.get(),
+      outbound : 0,
+      outboundHistory : outboundHistory.get(),
     },
     connecting() {
       isClosed = false;
@@ -146,22 +146,22 @@ export function build(ctx) {
         this.classStyle = "green";
         this.windowClass = "green";
         this.status.description =
-          connectionStatusConnected + ". " + connectionDelayGood;
+            connectionStatusConnected + ". " + connectionDelayGood;
       } else if (avgDelay < 100) {
         this.classStyle = "yellow";
         this.windowClass = "yellow";
         this.status.description =
-          connectionStatusConnected + ". " + connectionDelayFair;
+            connectionStatusConnected + ". " + connectionDelayFair;
       } else if (avgDelay < 300) {
         this.classStyle = "orange";
         this.windowClass = "orange";
         this.status.description =
-          connectionStatusConnected + ". " + connectionDelayMedian;
+            connectionStatusConnected + ". " + connectionDelayMedian;
       } else {
         this.classStyle = "red";
         this.windowClass = "red";
         this.status.description =
-          connectionStatusConnected + ". " + connectionDelayHeavy;
+            connectionStatusConnected + ". " + connectionDelayHeavy;
       }
     },
     close(e) {
