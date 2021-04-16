@@ -100,7 +100,7 @@ func (a Application) run(
 	}
 
 	closeNotify := closeSigBuilder()
-	signal.Notify(closeNotify, os.Kill, os.Interrupt, syscall.SIGHUP)
+	signal.Notify(closeNotify, syscall.SIGTERM, os.Interrupt, syscall.SIGHUP)
 	defer signal.Stop(closeNotify)
 
 	servers := make([]*server.Serving, 0, len(c.Servers))
