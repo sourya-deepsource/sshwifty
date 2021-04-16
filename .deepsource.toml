@@ -5,7 +5,7 @@ name = "go"
 enabled = true
 
   [analyzers.meta]
-  import_paths = ["github.com/BAN-AI-Multics/sshwifty"]
+  import_paths = ["github.com/nirui/sshwifty"]
 
 [[analyzers]]
 name = "test-coverage"
