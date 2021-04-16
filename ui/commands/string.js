@@ -40,9 +40,7 @@ export class String {
    *
    * @param {Uint8Array} str String data
    */
-  constructor(str) {
-    this.str = str;
-  }
+  constructor(str) { this.str = str; }
 
   /**
    * Return the string
@@ -50,9 +48,7 @@ export class String {
    * @returns {Uint8Array} String data
    *
    */
-  data() {
-    return this.str;
-  }
+  data() { return this.str; }
 
   /**
    * Return serialized String as array

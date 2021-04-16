@@ -67,9 +67,7 @@ export class Buffer {
    *
    * @returns {number} Return number >= 0 when found, -1 when not
    */
-  indexOf(byteData) {
-    return this.searchBuffer(byteData, this.remains());
-  }
+  indexOf(byteData) { return this.searchBuffer(byteData, this.remains()); }
 
   /**
    * Return how many bytes in the source + buffer is still available to be
@@ -78,9 +76,7 @@ export class Buffer {
    * @returns {number} Remaining size
    *
    */
-  remains() {
-    return this.buffer.length - this.used;
-  }
+  remains() { return this.buffer.length - this.used; }
 
   /**
    * Return how many bytes is still availale in the buffer.
@@ -91,9 +87,7 @@ export class Buffer {
    * @returns {number} Remaining size
    *
    */
-  buffered() {
-    return this.remains();
-  }
+  buffered() { return this.remains(); }
 
   /**
    * Export max n bytes from current buffer
@@ -160,16 +154,16 @@ export class Multiple {
 
     if (this.reader === null && this.subscribe.pendings() <= 0) {
       this.reader = {
-        reader: reader,
-        depleted: depleted,
+        reader : reader,
+        depleted : depleted,
       };
 
       return;
     }
 
     this.subscribe.resolve({
-      reader: reader,
-      depleted: depleted,
+      reader : reader,
+      depleted : depleted,
     });
   }
 
@@ -199,9 +193,7 @@ export class Multiple {
    *
    * @returns {number} Return number >= 0 when found, -1 when not
    */
-  indexOf(byteData) {
-    return this.searchBuffer(byteData, this.buffered());
-  }
+  indexOf(byteData) { return this.searchBuffer(byteData, this.buffered()); }
 
   /**
    * Return how many bytes still available in the buffer (How many bytes of
@@ -221,9 +213,7 @@ export class Multiple {
    * close current reading
    *
    */
-  close() {
-    return this.closeWithReason("Reader is closed");
-  }
+  close() { return this.closeWithReason("Reader is closed"); }
 
   /**
    * close current reading
@@ -282,11 +272,7 @@ export class Reader {
   constructor(multiple, bufferConverter) {
     this.multiple = multiple;
     this.buffers = new subscribe.Subscribe();
-    this.bufferConverter =
-      bufferConverter ||
-      ((d) => {
-        return d;
-      });
+    this.bufferConverter = bufferConverter || ((d) => { return d; });
     this.closed = false;
   }
 
@@ -316,9 +302,8 @@ export class Reader {
     }
 
     const self = this;
-    const converted = await this.bufferConverter(
-      await self.buffers.subscribe()
-    );
+    const converted =
+        await this.bufferConverter(await self.buffers.subscribe());
 
     this.multiple.feed(new Buffer(converted, () => {}), () => {});
 
@@ -329,9 +314,7 @@ export class Reader {
    * close current reading
    *
    */
-  close() {
-    return this.closeWithReason("Reader is closed");
-  }
+  close() { return this.closeWithReason("Reader is closed"); }
 
   /**
    * close current reading
@@ -372,9 +355,7 @@ export class Reader {
    *
    * @returns {number} Return number >= 0 when found, -1 when not
    */
-  async indexOf(byteData) {
-    return (await this.reader()).indexOf(byteData);
-  }
+  async indexOf(byteData) { return (await this.reader()).indexOf(byteData); }
 
   /**
    * Return how many bytes still available in the buffer (How many bytes of
@@ -382,9 +363,7 @@ export class Reader {
    *
    * @returns {number} How many bytes left in the current buffer
    */
-  async buffered() {
-    return (await this.reader()).buffered();
-  }
+  async buffered() { return (await this.reader()).buffered(); }
 
   /**
    * Export max n bytes from current buffer
@@ -395,9 +374,7 @@ export class Reader {
    * @returns {Uint8Array} Exported data
    *
    */
-  async export(n) {
-    return (await this.reader()).export(n);
-  }
+  async export(n) { return (await this.reader()).export(n); }
 }
 
 /**
@@ -464,9 +441,7 @@ export class Limited {
    * @returns {boolean} true when the reader is completed, false otherwise
    *
    */
-  completed() {
-    return this.remain <= 0;
-  }
+  completed() { return this.remain <= 0; }
 
   /**
    * Return the index of given byte inside current available (unused) read
@@ -479,10 +454,8 @@ export class Limited {
    *
    */
   searchBuffer(byteData, maxLen) {
-    return this.reader.searchBuffer(
-      byteData,
-      maxLen > this.remain ? this.remain : maxLen
-    );
+    return this.reader.searchBuffer(byteData, maxLen > this.remain ? this.remain
+                                                                   : maxLen);
   }
 
   /**
@@ -492,9 +465,7 @@ export class Limited {
    *
    * @returns {number} Return number >= 0 when found, -1 when not
    */
-  indexOf(byteData) {
-    return this.reader.searchBuffer(byteData, this.remain);
-  }
+  indexOf(byteData) { return this.reader.searchBuffer(byteData, this.remain); }
 
   /**
    * Return how many bytes still available to be read
@@ -502,9 +473,7 @@ export class Limited {
    * @returns {number} Remaining size
    *
    */
-  remains() {
-    return this.remain;
-  }
+  remains() { return this.remain; }
 
   /**
    * Return how many bytes still available in the buffer (How many bytes of
@@ -568,8 +537,8 @@ export async function readUntil(indexOfReader, byteData) {
 
   if (pos >= 0) {
     return {
-      data: await readN(indexOfReader, pos + 1),
-      found: true,
+      data : await readN(indexOfReader, pos + 1),
+      found : true,
     };
   }
 
@@ -577,13 +546,13 @@ export async function readUntil(indexOfReader, byteData) {
     const d = await readOne(indexOfReader);
 
     return {
-      data: d,
-      found: d[0] === byteData,
+      data : d,
+      found : d[0] === byteData,
     };
   }
 
   return {
-    data: await readN(indexOfReader, buffered),
-    found: false,
+    data : await readN(indexOfReader, buffered),
+    found : false,
   };
 }
