@@ -20,15 +20,41 @@ import * as iconv from "iconv-lite";
 import Exception from "./exception.js";
 
 const availableEncodings = [
-  "utf-8",        "ibm866",       "iso-8859-2",   "iso-8859-3",
-  "iso-8859-4",   "iso-8859-5",   "iso-8859-6",   "iso-8859-7",
-  "iso-8859-8",   "iso-8859-10",  "iso-8859-13",  "iso-8859-14",
-  "iso-8859-15",  "iso-8859-16",  "koi8-r",       "koi8-u",
-  "macintosh",    "windows-874",  "windows-1250", "windows-1251",
-  "windows-1252", "windows-1253", "windows-1254", "windows-1255",
-  "windows-1256", "windows-1257", "windows-1258", "gbk",
-  "gb18030",      "big5",         "euc-jp",       "shift-jis",
-  "euc-kr",       "utf-16be",     "utf-16le",
+  "utf-8",
+  "ibm866",
+  "iso-8859-2",
+  "iso-8859-3",
+  "iso-8859-4",
+  "iso-8859-5",
+  "iso-8859-6",
+  "iso-8859-7",
+  "iso-8859-8",
+  "iso-8859-10",
+  "iso-8859-13",
+  "iso-8859-14",
+  "iso-8859-15",
+  "iso-8859-16",
+  "koi8-r",
+  "koi8-u",
+  "macintosh",
+  "windows-874",
+  "windows-1250",
+  "windows-1251",
+  "windows-1252",
+  "windows-1253",
+  "windows-1254",
+  "windows-1255",
+  "windows-1256",
+  "windows-1257",
+  "windows-1258",
+  "gbk",
+  "gb18030",
+  "big5",
+  "euc-jp",
+  "shift-jis",
+  "euc-kr",
+  "utf-16be",
+  "utf-16le",
 ];
 
 export const charsetPresets = (() => {
@@ -52,35 +78,35 @@ export const charsetPresets = (() => {
 })();
 
 const numCharators = {
-  0 : true,
-  1 : true,
-  2 : true,
-  3 : true,
-  4 : true,
-  5 : true,
-  6 : true,
-  7 : true,
-  8 : true,
-  9 : true,
+  0: true,
+  1: true,
+  2: true,
+  3: true,
+  4: true,
+  5: true,
+  6: true,
+  7: true,
+  8: true,
+  9: true,
 };
 
 const hexCharators = {
-  0 : true,
-  1 : true,
-  2 : true,
-  3 : true,
-  4 : true,
-  5 : true,
-  6 : true,
-  7 : true,
-  8 : true,
-  9 : true,
-  a : true,
-  b : true,
-  c : true,
-  d : true,
-  e : true,
-  f : true,
+  0: true,
+  1: true,
+  2: true,
+  3: true,
+  4: true,
+  5: true,
+  6: true,
+  7: true,
+  8: true,
+  9: true,
+  a: true,
+  b: true,
+  c: true,
+  d: true,
+  e: true,
+  f: true,
 };
 
 /**
@@ -327,8 +353,8 @@ export function parseHostname(d) {
 function parseIP(d) {
   try {
     return {
-      type : "IPv4",
-      data : parseIPv4(d),
+      type: "IPv4",
+      data: parseIPv4(d),
     };
   } catch (e) {
     // Do nothing
@@ -336,16 +362,16 @@ function parseIP(d) {
 
   try {
     return {
-      type : "IPv6",
-      data : new Uint8Array(parseIPv6(d).buffer),
+      type: "IPv6",
+      data: new Uint8Array(parseIPv6(d).buffer),
     };
   } catch (e) {
     // Do nothing
   }
 
   return {
-    type : "Hostname",
-    data : parseHostname(d),
+    type: "Hostname",
+    data: parseHostname(d),
   };
 }
 
@@ -358,9 +384,9 @@ export function splitHostPort(d, defPort) {
     const a = parseIP(d);
 
     return {
-      type : a.type,
-      addr : a.data,
-      port : defPort,
+      type: a.type,
+      addr: a.data,
+      port: defPort,
     };
   }
 
@@ -385,8 +411,8 @@ export function splitHostPort(d, defPort) {
   const a = parseIP(addr);
 
   return {
-    type : a.type,
-    addr : a.data,
-    port : portNum,
+    type: a.type,
+    addr: a.data,
+    port: portNum,
   };
 }
