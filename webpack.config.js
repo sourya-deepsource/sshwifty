@@ -16,18 +16,18 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 const webpack = require("webpack");
-const {spawn} = require("child_process");
+const { spawn } = require("child_process");
 const path = require("path");
 const os = require("os");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
-const {VueLoaderPlugin} = require("vue-loader");
+const { VueLoaderPlugin } = require("vue-loader");
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-const {CleanWebpackPlugin} = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const inDevMode = process.env.NODE_ENV === "development";
 
@@ -47,7 +47,9 @@ const killSpawnProc = (proc, then) => {
 
   process.kill(-proc.proc.pid, "SIGINT");
 
-  const forceKill = setTimeout(() => { process.kill(-proc.proc.pid); }, 3000);
+  const forceKill = setTimeout(() => {
+    process.kill(-proc.proc.pid);
+  }, 3000);
 
   proc.waiter.then(() => {
     clearTimeout(forceKill);
@@ -70,18 +72,20 @@ const startAppSpawnProc = (onExit) => {
 
     process.stdout.write("Starting application ...\n");
 
-    const proc = spawn("go", [ "run", "sshwifty.go" ], {
-      env : mEnv,
-      detached : true,
+    const proc = spawn("go", ["run", "sshwifty.go"], {
+      env: mEnv,
+      detached: true,
     });
     const waiter = new Promise((resolve) => {
       let closed = false;
 
-      proc.stdout.on("data",
-                     (msg) => { process.stdout.write(msg.toString()); });
+      proc.stdout.on("data", (msg) => {
+        process.stdout.write(msg.toString());
+      });
 
-      proc.stderr.on("data",
-                     (msg) => { process.stderr.write(msg.toString()); });
+      proc.stderr.on("data", (msg) => {
+        process.stderr.write(msg.toString());
+      });
 
       proc.on("exit", (n) => {
         process.stdout.write("Application process is exited.\n");
@@ -118,18 +122,20 @@ const startBuildSpawnProc = (onExit) => {
 
     process.stdout.write("Generating source code ...\n");
 
-    const proc = spawn("go", [ "generate", "./..." ], {
-      env : mEnv,
-      detached : true,
+    const proc = spawn("go", ["generate", "./..."], {
+      env: mEnv,
+      detached: true,
     });
     const waiter = new Promise((resolve) => {
       let closed = false;
 
-      proc.stdout.on("data",
-                     (msg) => { process.stdout.write(msg.toString()); });
+      proc.stdout.on("data", (msg) => {
+        process.stdout.write(msg.toString());
+      });
 
-      proc.stderr.on("data",
-                     (msg) => { process.stderr.write(msg.toString()); });
+      proc.stderr.on("data", (msg) => {
+        process.stderr.write(msg.toString());
+      });
 
       proc.on("exit", (n) => {
         process.stdout.write("Code generation process is exited.\n");
@@ -156,14 +162,18 @@ const startBuildSpawnProc = (onExit) => {
 
 const killAllProc = () => {
   if (appBuildProc !== null) {
-    killSpawnProc(
-        appBuildProc,
-        () => { killSpawnProc(appSpawnProc, () => { process.exit(0); }); });
+    killSpawnProc(appBuildProc, () => {
+      killSpawnProc(appSpawnProc, () => {
+        process.exit(0);
+      });
+    });
 
     return;
   }
 
-  killSpawnProc(appSpawnProc, () => { process.exit(0); });
+  killSpawnProc(appSpawnProc, () => {
+    process.exit(0);
+  });
 };
 
 process.on("SIGTERM", killAllProc);

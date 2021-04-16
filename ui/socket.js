@@ -53,7 +53,9 @@ class Dial {
     return new Promise((resolve, reject) => {
       const ws = new WebSocket(this.address);
       let promised = false;
-      const timeoutTimer = setTimeout(() => { ws.close(); }, timeout);
+      const timeoutTimer = setTimeout(() => {
+        ws.close();
+      }, timeout);
       const myRes = (w) => {
         if (promised) {
           return;
@@ -75,16 +77,21 @@ class Dial {
         return reject(e);
       };
 
-      ws.addEventListener("open", (_event) => { myRes(ws); });
+      ws.addEventListener("open", (_event) => {
+        myRes(ws);
+      });
 
       ws.addEventListener("close", (event) => {
-        event.toString =
-            () => { return "WebSocket Error (" + event.code + ")"; };
+        event.toString = () => {
+          return "WebSocket Error (" + event.code + ")";
+        };
 
         myRej(event);
       });
 
-      ws.addEventListener("error", (_event) => { ws.close(); });
+      ws.addEventListener("error", (_event) => {
+        ws.close();
+      });
     });
   }
 
@@ -92,7 +99,9 @@ class Dial {
    * Build an socket encrypt and decrypt key string
    *
    */
-  async buildKeyString() { return this.privateKey.fetch(); }
+  async buildKeyString() {
+    return this.privateKey.fetch();
+  }
 
   /**
    * Build encrypt and decrypt key
@@ -141,40 +150,45 @@ class Dial {
 
       ws.addEventListener("error", (event) => {
         event.toString = () => {
-          return ("WebSocket Error (" + (event.code ? event.code : "Unknown") +
-                  ")");
+          return (
+            "WebSocket Error (" + (event.code ? event.code : "Unknown") + ")"
+          );
         };
 
         rd.closeWithReason(event);
       });
 
-      ws.addEventListener(
-          "close", (_event) => { rd.closeWithReason("Connection is closed"); });
+      ws.addEventListener("close", (_event) => {
+        rd.closeWithReason("Connection is closed");
+      });
 
-      let sdDataConvert = (rawData) => { return rawData; };
-      const getSdDataConvert = () => { return sdDataConvert; };
+      let sdDataConvert = (rawData) => {
+        return rawData;
+      };
+      const getSdDataConvert = () => {
+        return sdDataConvert;
+      };
       const sd = new sender.Sender(
-          async (rawData) => {
-            try {
-              const data = await getSdDataConvert()(rawData);
+        async (rawData) => {
+          try {
+            const data = await getSdDataConvert()(rawData);
 
-              ws.send(data.buffer);
-              callbacks.outbound(data);
-            } catch (e) {
-              ws.close();
-              rd.closeWithReason(e);
+            ws.send(data.buffer);
+            callbacks.outbound(data);
+          } catch (e) {
+            ws.close();
+            rd.closeWithReason(e);
 
-              if (process.env.NODE_ENV === "development") {
-                console.error(e);
-              }
-
-              throw e;
+            if (process.env.NODE_ENV === "development") {
+              console.error(e);
             }
-          },
-          4096 -
-              64, // Server has a 4096 bytes receive buffer, can be no greater,
-          minSenderDelay, // 30ms input delay
-          10              // max 10 buffered requests
+
+            throw e;
+          }
+        },
+        4096 - 64, // Server has a 4096 bytes receive buffer, can be no greater,
+        minSenderDelay, // 30ms input delay
+        10 // max 10 buffered requests
       );
 
       const senderNonce = crypt.generateNonce();
@@ -208,22 +222,27 @@ class Dial {
           dSize <<= 8;
           dSize |= dSizeBytes[1];
 
-          const decoded = await crypt.decryptGCM(key, receiverNonce,
-                                                 await reader.readN(rd, dSize));
+          const decoded = await crypt.decryptGCM(
+            key,
+            receiverNonce,
+            await reader.readN(rd, dSize)
+          );
 
           crypt.increaseNonce(receiverNonce);
 
-          r.feed(new reader.Buffer(new Uint8Array(decoded), () => {}),
-                 () => {});
+          r.feed(
+            new reader.Buffer(new Uint8Array(decoded), () => {}),
+            () => {}
+          );
         } catch (e) {
           r.closeWithReason(e);
         }
       });
 
       return {
-        reader : cgmReader,
-        sender : sd,
-        ws : ws,
+        reader: cgmReader,
+        sender: sd,
+        ws: ws,
       };
     } catch (e) {
       ws.close();
@@ -273,8 +292,10 @@ export class Socket {
     let currentUnpacked = 0;
 
     const shouldPause = () => {
-      return (currentReceived > minReceivedToPause &&
-              currentReceived > currentUnpacked * receiveToPauseFactor);
+      return (
+        currentReceived > minReceivedToPause &&
+        currentReceived > currentUnpacked * receiveToPauseFactor
+      );
     };
 
     try {
@@ -302,11 +323,13 @@ export class Socket {
             }
           }
         },
-        outbound(data) { callbacks.traffic(0, data.length); },
+        outbound(data) {
+          callbacks.traffic(0, data.length);
+        },
       });
 
       const streamHandler = new streams.Streams(conn.reader, conn.sender, {
-        echoInterval : self.echoInterval,
+        echoInterval: self.echoInterval,
         echoUpdater(delay) {
           const sendDelay = delay / 2;
 
