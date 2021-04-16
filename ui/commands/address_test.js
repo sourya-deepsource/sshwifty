@@ -24,9 +24,8 @@ describe("Address", () => {
     const addr = new address.Address(address.LOOPBACK, null, 8080);
     const buf = addr.buffer();
 
-    const r = new reader.Reader(new reader.Multiple(), (data) => {
-      return data;
-    });
+    const r =
+        new reader.Reader(new reader.Multiple(), (data) => { return data; });
 
     r.feed(buf);
 
@@ -38,16 +37,12 @@ describe("Address", () => {
   });
 
   it("Address IPv4", async () => {
-    const addr = new address.Address(
-      address.IPV4,
-      new Uint8Array([127, 0, 0, 1]),
-      8080
-    );
+    const addr = new address.Address(address.IPV4,
+                                     new Uint8Array([ 127, 0, 0, 1 ]), 8080);
     const buf = addr.buffer();
 
-    const r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
-      return data;
-    });
+    const r = new reader.Reader(new reader.Multiple(() => {}),
+                                (data) => { return data; });
 
     r.feed(buf);
 
@@ -60,15 +55,13 @@ describe("Address", () => {
 
   it("Address IPv6", async () => {
     const addr = new address.Address(
-      address.IPV6,
-      new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]),
-      8080
-    );
+        address.IPV6,
+        new Uint8Array([ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ]),
+        8080);
     const buf = addr.buffer();
 
-    const r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
-      return data;
-    });
+    const r = new reader.Reader(new reader.Multiple(() => {}),
+                                (data) => { return data; });
 
     r.feed(buf);
 
@@ -81,15 +74,12 @@ describe("Address", () => {
 
   it("Address HostName", async () => {
     const addr = new address.Address(
-      address.HOSTNAME,
-      new Uint8Array(["v", "a", "g", "u", "l", "1", "2", "3"]),
-      8080
-    );
+        address.HOSTNAME,
+        new Uint8Array([ "v", "a", "g", "u", "l", "1", "2", "3" ]), 8080);
     const buf = addr.buffer();
 
-    const r = new reader.Reader(new reader.Multiple(() => {}), (data) => {
-      return data;
-    });
+    const r = new reader.Reader(new reader.Multiple(() => {}),
+                                (data) => { return data; });
 
     r.feed(buf);
 
