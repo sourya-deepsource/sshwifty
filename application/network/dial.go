@@ -28,11 +28,5 @@ type Dial func(
 
 // TCPDial build a TCP dialer
 func TCPDial() Dial {
-	return func(
-		network string,
-		address string,
-		timeout time.Duration,
-	) (net.Conn, error) {
-		return net.DialTimeout(network, address, timeout)
-	}
+	return net.DialTimeout
 }
