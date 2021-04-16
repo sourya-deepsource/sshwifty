@@ -62,11 +62,11 @@ export class Sender {
     try {
       await this.sender(data);
 
-      for (let i in callbacks) {
+      for (const i in callbacks) {
         callbacks[i].resolve();
       }
     } catch (e) {
-      for (let i in callbacks) {
+      for (const i in callbacks) {
         callbacks[i].reject(e);
       }
     }
@@ -81,8 +81,8 @@ export class Sender {
    *
    */
   appendBuffer(data) {
-    const remainSize = this.buffer.length - this.bufferUsed,
-      appendLength = data.length > remainSize ? remainSize : data.length;
+    const remainSize = this.buffer.length - this.bufferUsed;
+    const appendLength = data.length > remainSize ? remainSize : data.length;
 
     this.buffer.set(data.slice(0, appendLength), this.bufferUsed);
     this.bufferUsed += appendLength;
@@ -129,7 +129,7 @@ export class Sender {
 
       callbacks.push({
         resolve: fetched.resolve,
-        reject: fetched.reject
+        reject: fetched.reject,
       });
 
       // Add data to buffer and maybe flush when the buffer is full
@@ -199,7 +199,7 @@ export class Sender {
       self.subscribe.resolve({
         data: data,
         resolve: resolve,
-        reject: reject
+        reject: reject,
       });
 
       if (self.bufferedRequests >= self.maxBufferedRequests) {

@@ -15,16 +15,17 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import * as header from "./header.js";
 import assert from "assert";
+
+import * as header from "./header.js";
 
 describe("Header", () => {
   it("Header", () => {
-    let h = new header.Header(header.ECHO);
+    const h = new header.Header(header.ECHO);
 
     h.set(63);
 
-    let n = new header.Header(h.value());
+    const n = new header.Header(h.value());
 
     assert.equal(h.type(), n.type());
     assert.equal(h.data(), n.data());
@@ -33,7 +34,7 @@ describe("Header", () => {
   });
 
   it("Stream", () => {
-    let h = new header.Stream(0, 0);
+    const h = new header.Stream(0, 0);
 
     h.set(header.STREAM_MAX_MARKER, header.STREAM_MAX_LENGTH);
 
@@ -45,7 +46,7 @@ describe("Header", () => {
   });
 
   it("InitialStream", () => {
-    let h = new header.InitialStream(0, 0);
+    const h = new header.InitialStream(0, 0);
 
     h.set(15, 128, true);
 

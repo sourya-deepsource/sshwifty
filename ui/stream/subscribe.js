@@ -80,7 +80,7 @@ export class Subscribe {
    */
   subscribe() {
     if (this.pending.length > 0) {
-      let p = this.pending.shift();
+      const p = this.pending.shift();
 
       switch (p[0]) {
         case typeReject:
@@ -98,17 +98,17 @@ export class Subscribe {
       throw new Exception(this.disabled, false);
     }
 
-    let self = this;
+    const self = this;
 
     return new Promise((resolve, reject) => {
-      self.res = d => {
+      self.res = (d) => {
         self.res = null;
         self.rej = null;
 
         resolve(d);
       };
 
-      self.rej = e => {
+      self.rej = (e) => {
         self.res = null;
         self.rej = null;
 

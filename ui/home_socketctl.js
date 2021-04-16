@@ -27,7 +27,7 @@ export function build(ctx) {
     "Consider to pause your input until remote is responsive";
 
   const buildEmptyHistory = () => {
-    let r = [];
+    const r = [];
 
     for (let i = 0; i < 32; i++) {
       r.push({ data: 0, class: "" });
@@ -36,20 +36,20 @@ export function build(ctx) {
     return r;
   };
 
-  let isClosed = false,
-    inboundPerSecond = 0,
-    outboundPerSecond = 0,
-    trafficPreSecondNextUpdate = new Date(),
-    inboundPre10Seconds = 0,
-    outboundPre10Seconds = 0,
-    trafficPre10sNextUpdate = new Date(),
-    inboundHistory = new history.Records(buildEmptyHistory()),
-    outboundHistory = new history.Records(buildEmptyHistory()),
-    trafficSamples = 0;
+  let isClosed = false;
+  let inboundPerSecond = 0;
+  let outboundPerSecond = 0;
+  let trafficPreSecondNextUpdate = new Date();
+  let inboundPre10Seconds = 0;
+  let outboundPre10Seconds = 0;
+  let trafficPre10sNextUpdate = new Date();
+  const inboundHistory = new history.Records(buildEmptyHistory());
+  const outboundHistory = new history.Records(buildEmptyHistory());
+  let trafficSamples = 0;
 
-  let delayHistory = new history.Records(buildEmptyHistory()),
-    delaySamples = 0,
-    delayPerInterval = 0;
+  const delayHistory = new history.Records(buildEmptyHistory());
+  let delaySamples = 0;
+  let delayPerInterval = 0;
 
   return {
     update(time) {
@@ -101,7 +101,7 @@ export function build(ctx) {
       inbound: 0,
       inboundHistory: inboundHistory.get(),
       outbound: 0,
-      outboundHistory: outboundHistory.get()
+      outboundHistory: outboundHistory.get(),
     },
     connecting() {
       isClosed = false;
@@ -137,7 +137,7 @@ export function build(ctx) {
         return;
       }
 
-      let avgDelay = Math.round(delayPerInterval / delaySamples);
+      const avgDelay = Math.round(delayPerInterval / delaySamples);
 
       this.message = Number(avgDelay).toLocaleString() + "ms";
       this.status.delay = avgDelay;
@@ -201,6 +201,6 @@ export function build(ctx) {
       this.classStyle = "red flash";
       this.windowClass = "red";
       this.status.description = connectionStatusDisconnected + ". Error: " + e;
-    }
+    },
   };
 }

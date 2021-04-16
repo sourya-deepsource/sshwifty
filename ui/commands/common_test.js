@@ -20,7 +20,7 @@ import * as common from "./common.js";
 
 describe("Common", () => {
   it("parseIPv4", () => {
-    let tests = [
+    const tests = [
       {
         sample: "127.0.0.1",
         expectingFailure: false,
@@ -53,7 +53,7 @@ describe("Common", () => {
       },
     ];
 
-    for (let i in tests) {
+    for (const i in tests) {
       if (tests[i].expectingFailure) {
         let ee = null;
 
@@ -65,7 +65,7 @@ describe("Common", () => {
 
         assert.notEqual(ee, null, "Test " + tests[i].sample);
       } else {
-        let data = common.parseIPv4(tests[i].sample);
+        const data = common.parseIPv4(tests[i].sample);
 
         assert.deepEqual(data, tests[i].expected);
       }
@@ -73,7 +73,7 @@ describe("Common", () => {
   });
 
   it("parseIPv6", () => {
-    let tests = [
+    const tests = [
       {
         sample: "2001:db8:1f70:0:999:de8:7648:6e8",
         expectingFailure: false,
@@ -181,7 +181,7 @@ describe("Common", () => {
       },
     ];
 
-    for (let i in tests) {
+    for (const i in tests) {
       if (tests[i].expectingFailure) {
         let ee = null;
 
@@ -193,7 +193,7 @@ describe("Common", () => {
 
         assert.notEqual(ee, null, "Test " + tests[i].sample);
       } else {
-        let data = common.parseIPv6(tests[i].sample);
+        const data = common.parseIPv6(tests[i].sample);
 
         assert.deepEqual(data, tests[i].expected);
       }
@@ -201,7 +201,7 @@ describe("Common", () => {
   });
 
   it("splitHostPort", () => {
-    let tests = [
+    const tests = [
       // Host name
       {
         sample: "ssh.vaguly.com",
@@ -267,8 +267,8 @@ describe("Common", () => {
       },
     ];
 
-    for (let i in tests) {
-      let hostport = common.splitHostPort(tests[i].sample, 22);
+    for (const i in tests) {
+      const hostport = common.splitHostPort(tests[i].sample, 22);
 
       assert.deepEqual(hostport.type, tests[i].expectedType);
       assert.deepEqual(hostport.addr, tests[i].expectedAddr);
