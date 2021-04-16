@@ -30,28 +30,28 @@ class Control {
     this.charset = data.charset;
 
     if (this.charset === "utf-8") {
-      let enc = new TextEncoder();
+      const enc = new TextEncoder();
 
-      this.charsetDecoder = d => {
+      this.charsetDecoder = (d) => {
         return d;
       };
 
-      this.charsetEncoder = dStr => {
+      this.charsetEncoder = (dStr) => {
         return enc.encode(dStr);
       };
     } else {
-      let dec = new TextDecoder(this.charset),
-        enc = new TextEncoder();
+      const dec = new TextDecoder(this.charset);
+      const enc = new TextEncoder();
 
-      this.charsetDecoder = d => {
+      this.charsetDecoder = (d) => {
         return enc.encode(
           dec.decode(d, {
-            stream: true
+            stream: true,
           })
         );
       };
 
-      this.charsetEncoder = dStr => {
+      this.charsetEncoder = (dStr) => {
         return iconv.encode(dStr, this.charset);
       };
     }
@@ -62,9 +62,9 @@ class Control {
     this.resizer = data.resize;
     this.subs = new subscribe.Subscribe();
 
-    let self = this;
+    const self = this;
 
-    data.events.place("stdout", async rd => {
+    data.events.place("stdout", async (rd) => {
       try {
         self.subs.resolve(self.charsetDecoder(await reader.readCompletely(rd)));
       } catch (e) {
@@ -72,7 +72,7 @@ class Control {
       }
     });
 
-    data.events.place("stderr", async rd => {
+    data.events.place("stderr", async (rd) => {
       try {
         self.subs.resolve(self.charsetDecoder(await reader.readCompletely(rd)));
       } catch (e) {
@@ -143,7 +143,7 @@ class Control {
       return;
     }
 
-    let cc = this.closer;
+    const cc = this.closer;
     this.closer = null;
 
     return cc();

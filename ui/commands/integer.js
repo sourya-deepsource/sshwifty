@@ -54,7 +54,7 @@ export class Integer {
 
     return new Uint8Array([
       (this.num >> 7) | integerHasNextBit,
-      this.num & integerValueCutter
+      this.num & integerValueCutter,
     ]);
   }
 
@@ -66,7 +66,7 @@ export class Integer {
    */
   async unmarshal(rd) {
     for (let i = 0; i < MAX_BYTES; i++) {
-      let r = await reader.readOne(rd);
+      const r = await reader.readOne(rd);
 
       this.num |= r[0] & integerValueCutter;
 

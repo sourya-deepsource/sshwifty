@@ -17,7 +17,7 @@
 
 export function get(url, headers) {
   return new Promise((res, rej) => {
-    let authReq = new XMLHttpRequest();
+    const authReq = new XMLHttpRequest();
 
     authReq.addEventListener("readystatechange", () => {
       if (authReq.readyState !== authReq.DONE) {
@@ -37,7 +37,7 @@ export function get(url, headers) {
 
     authReq.open("GET", url, true);
 
-    for (let h in headers) {
+    for (const h in headers) {
       authReq.setRequestHeader(h, headers[h]);
     }
 

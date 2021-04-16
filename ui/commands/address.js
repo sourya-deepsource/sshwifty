@@ -37,10 +37,10 @@ export class Address {
    * @throws {Exception} when address type is invalid
    */
   static async read(rd) {
-    let readed = await reader.readN(rd, 3),
-      portNum = 0,
-      addrType = LOOPBACK,
-      addrData = null;
+    const readed = await reader.readN(rd, 3);
+    let portNum = 0;
+    let addrType = LOOPBACK;
+    let addrData = null;
 
     portNum |= readed[0];
     portNum <<= 8;
@@ -123,7 +123,7 @@ export class Address {
         return new Uint8Array([
           this.addrPort >> 8,
           this.addrPort & 0xff,
-          LOOPBACK << 6
+          LOOPBACK << 6,
         ]);
 
       case IPV4:
@@ -138,7 +138,7 @@ export class Address {
           this.addrData[0],
           this.addrData[1],
           this.addrData[2],
-          this.addrData[3]
+          this.addrData[3],
         ]);
 
       case IPV6:
@@ -165,7 +165,7 @@ export class Address {
           this.addrData[12],
           this.addrData[13],
           this.addrData[14],
-          this.addrData[15]
+          this.addrData[15],
         ]);
 
       case HOSTNAME:
@@ -173,7 +173,7 @@ export class Address {
           throw new Exception("Host name cannot longer than " + MAX_ADDR_LEN);
         }
 
-        let dataBuf = new Uint8Array(this.addrData.length + 3);
+        const dataBuf = new Uint8Array(this.addrData.length + 3);
 
         dataBuf[0] = (this.addrPort >> 8) & 0xff;
         dataBuf[1] = this.addrPort & 0xff;
@@ -201,8 +201,8 @@ export class Address {
  * @throws {Exception} when the address is invalid
  */
 export function parseHostPort(s, defaultPort) {
-  let d = common.splitHostPort(s, defaultPort),
-    t = HOSTNAME;
+  const d = common.splitHostPort(s, defaultPort);
+  let t = HOSTNAME;
 
   switch (d.type) {
     case "IPv4":
@@ -223,6 +223,6 @@ export function parseHostPort(s, defaultPort) {
   return {
     type: t,
     address: d.addr,
-    port: d.port
+    port: d.port,
   };
 }
