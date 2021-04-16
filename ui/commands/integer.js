@@ -15,8 +15,9 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import Exception from "./exception.js";
 import * as reader from "../stream/reader.js";
+
+import Exception from "./exception.js";
 
 export const MAX = 0x3fff;
 export const MAX_BYTES = 2;

@@ -17,10 +17,10 @@
 
 import * as iconv from "iconv-lite";
 
-import * as subscribe from "../stream/subscribe.js";
-import * as reader from "../stream/reader.js";
 import * as color from "../commands/color.js";
 import * as common from "../commands/common.js";
+import * as reader from "../stream/reader.js";
+import * as subscribe from "../stream/subscribe.js";
 
 class Control {
   constructor(data, color) {

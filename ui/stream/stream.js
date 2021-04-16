@@ -15,11 +15,11 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import * as common from "./common.js";
 import Exception from "./exception.js";
 import * as header from "./header.js";
 import * as reader from "./reader.js";
 import * as sender from "./sender.js";
-import * as common from "./common.js";
 
 export class Sender {
   /**

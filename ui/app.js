@@ -15,8 +15,12 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import Vue from "vue";
 import "./app.css";
+import "./common.css";
+import "./landing.css";
+
+import Vue from "vue";
+
 import Auth from "./auth.vue";
 import { Color as ControlColor } from "./commands/color.js";
 import { Commands } from "./commands/commands.js";
@@ -24,12 +28,10 @@ import { Controls } from "./commands/controls.js";
 import { Presets } from "./commands/presets.js";
 import * as ssh from "./commands/ssh.js";
 import * as telnet from "./commands/telnet.js";
-import "./common.css";
 import * as sshctl from "./control/ssh.js";
 import * as telnetctl from "./control/telnet.js";
 import * as cipher from "./crypto.js";
 import Home from "./home.vue";
-import "./landing.css";
 import Loading from "./loading.vue";
 import { Socket } from "./socket.js";
 import * as stream from "./stream/common";
