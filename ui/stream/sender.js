@@ -47,7 +47,9 @@ export class Sender {
    * @param {integer} newDelay the new delay
    *
    */
-  setDelay(newDelay) { this.bufferFlushDelay = newDelay; }
+  setDelay(newDelay) {
+    this.bufferFlushDelay = newDelay;
+  }
 
   /**
    * Sends data to the this.sender
@@ -126,8 +128,8 @@ export class Sender {
       }
 
       callbacks.push({
-        resolve : fetched.resolve,
-        reject : fetched.reject,
+        resolve: fetched.resolve,
+        reject: fetched.reject,
       });
 
       // Add data to buffer and maybe flush when the buffer is full
@@ -135,7 +137,8 @@ export class Sender {
 
       while (fetched.data.length > currentSendDataLen) {
         const sentLen = this.appendBuffer(
-            fetched.data.slice(currentSendDataLen, fetched.data.length));
+          fetched.data.slice(currentSendDataLen, fetched.data.length)
+        );
 
         // Buffer not full, wait for the force flush
         if (this.buffer.length > this.bufferUsed) {
@@ -194,9 +197,9 @@ export class Sender {
 
     return new Promise((resolve, reject) => {
       self.subscribe.resolve({
-        data : data,
-        resolve : resolve,
-        reject : reject,
+        data: data,
+        resolve: resolve,
+        reject: reject,
       });
 
       if (self.bufferedRequests >= self.maxBufferedRequests) {
