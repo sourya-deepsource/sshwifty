@@ -32,22 +32,17 @@ describe("Sender", () => {
   it("Send", async () => {
     const maxSegSize = 64;
     const result = [];
-    const sd = new sender.Sender(
-      (rawData) => {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            for (const i in rawData) {
-              result.push(rawData[i]);
-            }
+    const sd = new sender.Sender((rawData) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          for (const i in rawData) {
+            result.push(rawData[i]);
+          }
 
-            resolve();
-          }, 5);
-        });
-      },
-      maxSegSize,
-      300,
-      3
-    );
+          resolve();
+        }, 5);
+      });
+    }, maxSegSize, 300, 3);
     const expected = generateTestData(maxSegSize * 16);
 
     sd.send(expected);
@@ -72,22 +67,17 @@ describe("Sender", () => {
   it("Send (Multiple calls)", async () => {
     const maxSegSize = 64;
     const result = [];
-    const sd = new sender.Sender(
-      (rawData) => {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            for (const i in rawData) {
-              result.push(rawData[i]);
-            }
+    const sd = new sender.Sender((rawData) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          for (const i in rawData) {
+            result.push(rawData[i]);
+          }
 
-            resolve();
-          }, 10);
-        });
-      },
-      maxSegSize,
-      300,
-      100
-    );
+          resolve();
+        }, 10);
+      });
+    }, maxSegSize, 300, 100);
     const expectedSingle = generateTestData(maxSegSize * 2);
     const expectedLen = expectedSingle.length * 16;
     const expected = new Uint8Array(expectedLen);
@@ -97,9 +87,7 @@ describe("Sender", () => {
     }
 
     for (let i = 0; i < expectedLen; i += expectedSingle.length) {
-      setTimeout(() => {
-        sd.send(expectedSingle);
-      }, 100);
+      setTimeout(() => { sd.send(expectedSingle); }, 100);
     }
 
     const sendCompleted = new Promise((resolve) => {

@@ -1,4 +1,4 @@
-import { History } from "./commands/history.js";
+import {History} from "./commands/history.js";
 
 export function build(ctx) {
   let rec = [];
@@ -26,16 +26,12 @@ export function build(ctx) {
     alert("Unable to load data of Known remotes: " + e);
   }
 
-  return new History(
-    rec,
-    (h, d) => {
-      try {
-        localStorage.setItem("sshwifty-knowns", JSON.stringify(d));
-        ctx.connector.knowns = h.all();
-      } catch (e) {
-        alert("Unable to save remote history due to error: " + e);
-      }
-    },
-    64
-  );
+  return new History(rec, (h, d) => {
+    try {
+      localStorage.setItem("sshwifty-knowns", JSON.stringify(d));
+      ctx.connector.knowns = h.all();
+    } catch (e) {
+      alert("Unable to save remote history due to error: " + e);
+    }
+  }, 64);
 }
