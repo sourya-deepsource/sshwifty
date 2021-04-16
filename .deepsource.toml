@@ -12,6 +12,10 @@ name = "test-coverage"
 enabled = true
 
 [[analyzers]]
+name = "docker"
+enabled = true
+
+[[analyzers]]
 name = "javascript"
 enabled = true
 
@@ -56,8 +60,4 @@ enabled = true
 
 [[transformers]]
 name = "standardjs"
-enabled = true
-
-[[transformers]]
-name = "rubocop"
 enabled = true
